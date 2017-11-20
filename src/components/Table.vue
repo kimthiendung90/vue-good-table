@@ -1,5 +1,5 @@
 <template>
-  <div class="good-table" :class="{'rtl': rtl}">
+  <div :class="['good-table', styleClass, rtl ? rtl : '']">
     <div :class="{'responsive': responsive}">
       <div v-if="title" class="table-header clearfix">
         <h2 class="table-title pull-left">{{title}}</h2>
@@ -7,22 +7,11 @@
         </div>
       </div>
 
-      <vue-good-pagination
-        v-if="paginate && paginateOnTop"
-        :perPage="perPage"
-        :rtl="rtl"
-        :total="processedRows.length"
-        @page-changed="pageChanged"
-        @per-page-changed="perPageChanged"></vue-good-pagination>
-
-      <table ref="table" :class="styleClass">
+      <table ref="table" class="table">
         <thead>
           <tr v-if="globalSearch && externalSearchQuery == null">
             <td :colspan="lineNumbers ? columns.length + 1: columns.length">
               <div class="global-search">
-                <span class="global-search-icon">
-                  <img src="../images/search_icon.png" alt="Search Icon" />
-                </span>
                 <input type="text" class="form-control global-search-input" :placeholder="globalSearchPlaceholder" v-model="globalSearchTerm" @keyup.enter="searchTable()" />
               </div>
             </td>
@@ -118,7 +107,7 @@
       </table>
 
       <vue-good-pagination
-        v-if="paginate && !paginateOnTop"
+        v-if="paginate"
         :perPage="perPage"
         :rtl="rtl"
         :total="processedRows.length"
@@ -146,7 +135,6 @@
       perPage: {},
       sortable: {default: true},
       paginate: {default: false},
-      paginateOnTop: {default: false},
       lineNumbers: {default: false},
       defaultSortBy: {default: null},
       responsive: {default: true},
@@ -159,7 +147,7 @@
       externalSearchQuery: {default: null},
 
       // text options
-      globalSearchPlaceholder: {default: 'Search Table'}
+      globalSearchPlaceholder: {default: 'Search ...'}
     },
 
     data: () => ({
@@ -594,11 +582,11 @@
 }
 
 .pull-left{
-  float:  left !important;
+  float: left !important;
 }
 
 .pull-right{
-  float:  right !important;
+  float: right !important;
 }
 
 .clearfix::after {
@@ -613,7 +601,7 @@
   table{
     border-collapse: collapse;
     background-color: transparent;
-    margin-bottom:  0px;
+    margin-bottom: 0px;
   }
   .table{
     width: 100%;
@@ -621,22 +609,27 @@
     table-layout: auto;
   }
 
-  .table.table-striped tbody tr:nth-of-type(odd) {
-      background-color: rgba(35,41,53,.05);
+  .table-striped .table tbody tr:nth-of-type(odd) {
+      background-color: rgba(35,41,53,.02);
   }
 
-  .table.table-bordered td, .table-bordered th {
-      border: 1px solid #DDD;
+  .table-striped .table tbody tr:hover {
+      background-color: rgba(35,41,53,.075);
+  }
+
+  .table-bordered .table td, .table-bordered th,
+  .table-bordered .table-footer {
+      border: 1px solid #ddd;
   }
 
   .table td, .table th:not(.line-numbers) {
-    padding: .75rem 1.5rem .75rem .75rem;
+    padding: .75rem 1.2rem .75rem .75rem;
     vertical-align: top;
     border-top: 1px solid #ddd;
   }
 
   .rtl .table td, .rtl .table th:not(.line-numbers) {
-    padding: .75rem .75rem .75rem 1.5rem;
+    padding: .75rem;
   }
 
   .table.condensed td, .table.condensed th {
@@ -644,14 +637,14 @@
   }
 
   .table thead th, .table.condensed thead th {
+    cursor: pointer;
     vertical-align: bottom;
-    border-bottom:  2px solid #ddd;
     padding-right: 1.5rem;
-    background-color: rgba(35,41,53,0.03);
+    background-color: rgba(35,41,53,0.05);
   }
   .rtl .table thead th, .rtl .table.condensed thead th {
-    padding-left:  1.5rem;
-    padding-right:  .75rem;
+    padding-left: 1rem;
+    padding-right: .75rem;
   }
 
   tr.clickable {
@@ -661,111 +654,89 @@
   .table input, .table select{
     box-sizing: border-box;
     display: block;
-    width: calc(100%);
-    height: 34px;
-    padding: 6px 12px;
+    width: 100%;
+    height: 28px;
+    padding: 5px 10px;
     font-size: 14px;
     line-height: 1.42857143;
     color: #555;
     background-color: #fff;
     background-image: none;
     border: 1px solid #ccc;
-    border-radius: 4px;
-    -webkit-box-shadow: inset 0 1px 1px rgba(35,41,53,.075);
     box-shadow: inset 0 1px 1px rgba(35,41,53,.075);
-    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
-    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
   }
 
   table th.sorting-asc,
   table th.sorting-desc {
-    color: rgba(0, 0, 0, 0.66);
+    color: rgba(0,0,0,.7);
     position: relative;
   }
 
   table th.sorting:after,
   table th.sorting-asc:after  {
     font-family: 'Material Icons';
-    position:  absolute;
-    height:  0px;
-    width:  0px;
+    position: absolute;
+    height: 0px;
+    width: 0px;
     content: '';
     display: none;
-    border-left: 6px solid transparent;
-    border-right: 6px solid transparent;
-    border-bottom: 6px solid rgba(0, 0, 0, 0.66);
-    margin-top:  6px;
-    margin-left:  5px;
+    border: 4px solid transparent;
+    border-bottom: 6px solid rgba(0,0,0,.6);
+    margin-top: 2px;
+    margin-left: 4px;
   }
 
   .rtl table th.sorting:after,
   .rtl table th.sorting-asc:after{
-    margin-right:  5px;
-    margin-left:  0px;
-  }
-
-  table th.sorting:hover:after{
-    display: inline-block;
-    border-bottom-color: rgba(35,41,53,0.25);
+    margin-right: 4px;
+    margin-left: 0;
   }
 
   table th.sorting-asc:after,
-  table th.sorting-desc:after {
+  table th.sorting-desc:after,
+  table th.sorting:hover:after {
     display: inline-block;
   }
 
   table th.sorting-desc:after {
-    border-top:  6px solid rgba(0, 0, 0, 0.66);
-    border-left: 6px solid transparent;
-    border-right: 6px solid transparent;
-    border-bottom: none;
-    margin-top:  8px;
+    border-bottom-color: transparent;
+    border: 4px solid transparent;
+    border-top: 6px solid rgba(0,0,0,.6);
+    margin-top: 6px;
   }
 
 .responsive {
   width: 100%;
-  overflow-x: scroll;
 }
 
 /* Table header specific styles
 ************************************************/
 
 .table-header{
-  padding:  .75rem;
+  padding: .75rem;
 }
 
 .table-header .table-title{
-  margin:  0px;
+  margin: 0px;
   font-size: 18px;
 }
 
   /* Global Search
   **********************************************/
   .global-search{
-    position:  relative;
-    padding-left: 40px;
-  }
-  .global-search-icon{
-    position:  absolute;
-    left:  0px;
-    max-width:  32px;
-  }
-  .global-search-icon > img{
-    max-width:  100%;
-    margin-top:  8px;
-    opacity: 0.5;
+    position: relative;
+    margin-left: .45rem;
   }
   table .global-search-input{
-   width:  calc(100% - 30px);
+    width: 100%;
   }
 
   /* Line numbers
   **********************************************/
   table th.line-numbers, .table.condensed th.line-numbers{
     background-color: rgba(35,41,53,0.05);
-    padding-left:  3px;
-    padding-right:  3px;
+    padding-left: 3px;
+    padding-right: 3px;
     word-wrap: break-word;
     width: 45px;
     text-align: center;
@@ -776,7 +747,7 @@
   }
 
   .text-disabled{
-    color:  #aaa;
+    color: #aaa;
   }
 
 </style>

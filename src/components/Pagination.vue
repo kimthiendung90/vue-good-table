@@ -9,8 +9,8 @@
           <option value="10">10</option>
           <option value="20">20</option>
           <option value="30">30</option>
-          <option value="40">40</option>
           <option value="50">50</option>
+          <option value="100">100</option>
           <option value="-1">{{allText}}</option>
         </select>
       </label>
@@ -135,11 +135,11 @@
   }
 
   .pull-left{
-    float:  left !important;
+    float: left !important;
   }
 
   .pull-right{
-    float:  right !important;
+    float: right !important;
   }
 
   .clearfix::after {
@@ -152,13 +152,13 @@
   ************************************************/
 
   .table-footer{
-    /* background-color: rgba(35,41,53, 0.03); */
     background-color: rgba(35,41,53,0.05);
-    border: 1px solid #DDD;
-    margin:  0;
-    padding:  1rem;
+    border-top: 1px solid #DDD;
+    border-bottom: 1px solid #DDD;
+    margin: -1px 0 0 0;
+    padding: .75rem;
     font-size: 14px;
-    color:  rgba(0, 0, 0, 0.44);
+    color: rgba(0,0,0,.5);
   }
 
   .table-footer>div{
@@ -171,7 +171,7 @@
 
   .pagination-controls a{
     text-decoration: none;
-    color: rgba(0, 0, 0, 0.66);
+    color: rgba(0,0,0,.7);
     font-size: 14px;
     font-weight: 600;
     opacity: 0.8;
@@ -193,41 +193,41 @@
   }
 
   .pagination-controls .info{
-    margin:  0px 15px;
+    margin: 0px 15px;
     font-size: 13px;
     font-weight: bold;
-    color:  rgba(0, 0, 0, 0.40);
+    color: rgba(0,0,0,.5);
   }
 
   .pagination-controls a .chevron{
-    width:  24px;
-    height:  24px;
+    width: 24px;
+    height: 24px;
     border-radius: 15%;
-    /* border:  1px solid rgba(35,41,53,0.2);
+    /* border: 1px solid rgba(35,41,53,0.2);
     background-color: #fff; */
-    position:  relative;
-    margin:  0px 8px;
+    position: relative;
+    margin: 0px 8px;
   }
 
   .pagination-controls .chevron::after{
-    content:  '';
-    position:  absolute;
-    display:  block;
-    left:  50%;
-    top:  50%;
-    margin-top:  -6px;
+    content: '';
+    position: absolute;
+    display: block;
+    left: 50%;
+    top: 50%;
+    margin-top: -6px;
     border-top: 6px solid transparent;
     border-bottom: 6px solid transparent;
   }
 
   .pagination-controls .chevron.left::after{
-    border-right:  6px solid rgba(0, 0, 0, 0.66);
-    margin-left:  -3px;
+    border-right: 6px solid rgba(0,0,0,.7);
+    margin-left: -3px;
   }
 
   .pagination-controls .chevron.right::after{
-    border-left:  6px solid rgba(0, 0, 0, 0.66);
-    margin-left:  -3px;
+    border-left: 6px solid rgba(0,0,0,.7);
+    margin-left: -3px;
   }
 
   .table-footer select {
@@ -240,19 +240,19 @@
     height: auto;
     font-size: 14px;
     margin-left: 8px;
-    color:  rgba(0, 0, 0, 0.55);
+    color: rgba(0,0,0,.5);
     font-weight: bold;
   }
 
   .table-footer .perpage-count{
-    color:  rgba(0, 0, 0, 0.55);
+    color: rgba(0,0,0,.5);
     font-weight: bold;
   }
 
   @media only screen and (max-width: 750px) {
     /* on small screens hide the info */
     .pagination-controls .info{
-      display:  none;
+      display: none;
     }
   }
 </style>

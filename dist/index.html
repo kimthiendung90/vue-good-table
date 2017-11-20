@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Vuetiful Component Framework</title>
+</head>
+
+<body>
+    <div id="app">
+        <vue-good-table
+        style-class="table table-bordered table-striped"
+        title="Simple Table"
+        :columns="columns"
+        :paginate="true"
+        :rows="rows"/>
+    </div>
+    <script src="./core/vue.min.js"></script>
+    <script src="./vue-good-table.min.js"></script>
+    <script>
+        new Vue({
+
+            el: "#app",
+            data () {
+                return {
+                columns: [
+                    {
+                        label: 'Name',
+                        field: 'name',
+                        filterable: true,
+                    },
+                    {
+                        label: 'Age',
+                        field: 'age',
+                        type: 'number',
+                    },
+                    {
+                        label: 'Joined On',
+                        field: 'joined',
+                        type: 'date',
+                        inputFormat: 'YYYYMMDD',
+                        outputFormat: 'MMM Do YYYY',
+                    },
+                    ],
+                rows: [
+                    {name:"John", age:20, joined: '20120201'},
+                    {name:"Jane", age:24, joined: '20120305'},
+                    {name:"Susan", age:16, joined: '20140823'},
+                    {name:"Chris", age:55, joined: '20161109'},
+                    {name:"Dan", age:40, joined: '20170612'},
+                ],
+                };
+            }
+        })
+            
+    </script>
+</body>
+
+</html>
